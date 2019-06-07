@@ -1,0 +1,52 @@
+{
+  "name": "@advanced-rest-client/arc-fit-mixin",
+  "version": "1.0.0",
+  "description": "arc-fit-mixin is a port of iron-fit-behavior that works with web components",
+  "keywords": [
+    "api-components",
+    "arc-components",
+    "mixins",
+    "web-components"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/advanced-rest-client/arc-fit-mixin.git"
+  },
+  "homepage": "https://github.com/advanced-rest-client/arc-fit-mixin",
+  "license": "Apache-2.0",
+  "main": "arc-fit-mixin.js",
+  "authors": [
+    "Pawel Psztyc",
+    "The Advanced REST client authors <arc@mulesoft.com>"
+  ],
+  "contributors": [
+    "Pawel Psztyc",
+    "The Advanced REST client authors <arc@mulesoft.com>"
+  ],
+  "bugs": {
+    "url": "https://github.com/advanced-rest-client/arc-fit-mixin/issues",
+    "email": "arc@mulesoft.com"
+  },
+  "scripts": {
+    "start": "owc-dev-server --open demo",
+    "test": "karma start --coverage",
+    "test:watch": "karma start --auto-watch=true --single-run=false",
+    "test:update-snapshots": "karma start --update-snapshots",
+    "test:prune-snapshots": "karma start --prune-snapshots",
+    "test:legacy": "karma start --legacy --coverage",
+    "test:legacy:watch": "karma start --legacy --auto-watch=true --single-run=false",
+    "test:sl": "karma start karma.sl.config.js --legacy --coverage"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@advanced-rest-client/arc-demo-helper": "^1.0.1",
+    "@advanced-rest-client/testing-karma-sl": "^1.0.2",
+    "lit-html": "^1.0.0",
+    "lit-element": "^2.0.1",
+    "owc-dev-server": "^0.3.0",
+    "@open-wc/testing-karma": "^2.0.0",
+    "webpack-merge": "^4.1.5",
+    "@open-wc/testing-karma-bs": "^1.0.0",
+    "@open-wc/testing": "^0.11.1"
+  }
+}
