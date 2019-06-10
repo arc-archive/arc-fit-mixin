@@ -49,7 +49,7 @@
  *
  * ```javascript
  * import { LitElement } from 'lit-element';
- * import { ArcFitMixin } from '@advanced-rest-client/arc-fit-mixin.js';
+ * import { ArcFitMixin } from '@advanced-rest-client/arc-fit-mixin/arc-fit-mixin.js';
  *
  * class ArcFitImpl extends ArcFitMixin(LitElement) {
  *  ...

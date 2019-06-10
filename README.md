@@ -66,20 +66,16 @@ npm i @advanced-rest-client/arc-fit-mixin
 
 ```javascript
 import { LitElement } from 'lit-element';
-import { ArcFitMixin } from '@advanced-rest-client/arc-fit-mixin.js';
+import { ArcFitMixin } from '@advanced-rest-client/arc-fit-mixin/arc-fit-mixin.js';
 
 class ArcFitImpl extends ArcFitMixin(LitElement) {
   static get properties() {
-    const top = super.properties || {};
-    const props = {
+    return {
       myProp: { type: Object, attribute: 'my-prop' },
     };
-    return Object.assign({}, top, props);
   }
 }
 ```
-
-Note how properties are propagated. Without this, parent properties would be overwritten.
 
 ## Testing
 
