@@ -13,11 +13,9 @@ class TestFit extends ArcFitMixin(LitElement) {
   }
 
   static get properties() {
-    const top = super.properties || {};
-    const props = {
+    return {
       myProp: {type: String, attribute: 'my-prop'}
     };
-    return Object.assign({}, top, props);
   }
 
   render() {

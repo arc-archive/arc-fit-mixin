@@ -61,8 +61,7 @@
  */
 export const ArcFitMixin = (superClass) => class extends superClass {
   static get properties() {
-    const top = super.properties || {};
-    const props = {
+    return {
       /**
        * The element that will receive a `max-height`/`width`. By default it is
        * the same as `this`, but it can be set to a child element. This is useful,
@@ -148,7 +147,6 @@ export const ArcFitMixin = (superClass) => class extends superClass {
       /** @type {?Object} */
       _fitInfo: {type: Object}
     };
-    return Object.assign({}, top, props);
   }
 
   constructor() {
