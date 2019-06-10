@@ -13,7 +13,7 @@ class SimpleFit extends ArcFitMixin(LitElement) {
 
   static get properties() {
     return {
-      myProp: {type: String, attribute: 'my-prop'}
+      myProp: { type: String, attribute: 'my-prop' }
     };
   }
 
@@ -21,4 +21,4 @@ class SimpleFit extends ArcFitMixin(LitElement) {
     return html`<slot></slot>`;
   }
 }
-customElements.define('simple-fit', SimpleFit);
+window.customElements.define('simple-fit', SimpleFit);

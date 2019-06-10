@@ -145,7 +145,7 @@ export const ArcFitMixin = (superClass) => class extends superClass {
       autoFitOnAttach: { type: Boolean, reflect: true, attribute: 'auto-fit-on-attach' },
 
       /** @type {?Object} */
-      _fitInfo: {type: Object}
+      _fitInfo: { type: Object }
     };
   }
 

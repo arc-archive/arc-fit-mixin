@@ -14,7 +14,7 @@ class TestFit extends ArcFitMixin(LitElement) {
 
   static get properties() {
     return {
-      myProp: {type: String, attribute: 'my-prop'}
+      myProp: { type: String, attribute: 'my-prop' }
     };
   }
 
@@ -22,4 +22,4 @@ class TestFit extends ArcFitMixin(LitElement) {
     return html`<slot></slot>`;
   }
 }
-customElements.define('test-fit', TestFit);
+window.customElements.define('test-fit', TestFit);
