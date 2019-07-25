@@ -1,6 +1,6 @@
 {
   "name": "@advanced-rest-client/arc-fit-mixin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "arc-fit-mixin is a port of iron-fit-behavior that works with web components",
   "keywords": [
     "api-components",
