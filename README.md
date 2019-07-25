@@ -4,13 +4,9 @@
 
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/advanced-rest-client/arc-fit-mixin)
 
-This mixin is a port of [iron-fit-behavior](https://github.com/PolymerElements/iron-fit-behavior)
-that works with LitElement.
+This mixin is a port of [iron-fit-behavior](https://github.com/PolymerElements/iron-fit-behavior) that works with LitElement.
 
-`ArcFitMixin` fits an element in another element using `max-height`
-and `max-width`, and optionally centers it in the window or another element.
-The element will only be sized and/or positioned if it has not already been
-sized and/or positioned by CSS.
+`ArcFitMixin` fits an element in another element using `max-height` and `max-width`, and optionally centers it in the window or another element. The element will only be sized and/or positioned if it has not already been sized and/or positioned by CSS.
 
 |CSS properties|Action|
 |----------------------|---------------------------------------------------|
@@ -20,24 +16,21 @@ sized and/or positioned by CSS.
 |`max-height` set|Element respects `max-height`|
 |`max-width` set|Element respects `max-width`|
 
-`ArcFitMixin` can position an element into another element using
-`verticalAlign` and `horizontalAlign`. This will override the element's css
-position.
+`ArcFitMixin` can position an element into another element using `verticalAlign` and `horizontalAlign`. This will override the element's css position.
 
 ```html
 <div class="container">
-  <iron-fit-impl vertical-align="top" horizontal-align="auto">
+  <iron-fit-impl verticalalign="top" horizontalalign="auto">
     Positioned into the container
   </iron-fit-impl>
 </div>
 ```
 
-Use `noOverlap` to position the element around another element without
-overlapping it.
+Use `noOverlap` to position the element around another element without overlapping it.
 
 ```html
 <div class="container">
-  <iron-fit-impl no-overlap vertical-align="auto" horizontal-align="auto">
+  <iron-fit-impl nooverlap verticalalign="auto" horizontalalign="auto">
     Positioned around the container
   </iron-fit-impl>
 </div>
@@ -50,11 +43,27 @@ CSS margin values.
 
 ```html
 <div class="container">
-  <iron-fit-impl vertical-align="top" vertical-offset="20">
+  <iron-fit-impl verticalalign="top" verticaloffset="20">
     With vertical offset
   </iron-fit-impl>
 </div>
 ```
+
+## Deprecation notice
+
+The following attributes are supported for compatibility with older and Polymer elements but eventually will be removed and replaced wit  the corresponding new attribute.
+
+-   `sizing-target` > `sizingtarget`
+-   `fit-into` > `fitinto`
+-   `no-overlap` > `nooverlap`
+-   `position-target` > `positiontarget`
+-   `horizontal-align` > `horizontalalign`
+-   `vertical-align` > `verticalalign`
+-   `dynamic-align` > `dynamicalign`
+-   `horizontal-offset` > `horizontaloffset`
+-   `vertical-offset` > `verticaloffset`
+-   `auto-fit-on-attach` > `autofitonattach`
+
 
 ## Installation
 

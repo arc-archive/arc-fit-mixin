@@ -20,7 +20,7 @@
  * position.
  *
  *     <div class="container">
- *       <iron-fit-impl vertical-align="top" horizontal-align="auto">
+ *       <iron-fit-impl verticalalign="top" horizontalalign="auto">
  *         Positioned into the container
  *       </iron-fit-impl>
  *     </div>
@@ -29,7 +29,7 @@
  * overlapping it.
  *
  *     <div class="container">
- *       <iron-fit-impl no-overlap vertical-align="auto" horizontal-align="auto">
+ *       <iron-fit-impl nooverlap verticalalign="auto" horizontalalign="auto">
  *         Positioned around the container
  *       </iron-fit-impl>
  *     </div>
@@ -40,7 +40,7 @@
  * CSS margin values.
  *
  *     <div class="container">
- *       <iron-fit-impl vertical-align="top" vertical-offset="20">
+ *       <iron-fit-impl verticalalign="top" verticaloffset="20">
  *         With vertical offset
  *       </iron-fit-impl>
  *     </div>
@@ -56,6 +56,22 @@
  * }
  * ```
  *
+ * ## Deprecation notice
+ *
+ * The following attributes are supported for compatibility with older and Polymer elements
+ * but eventually will be removed and replaced wit  the corresponding new attribute.
+ *
+ * -   `sizing-target` > `sizingtarget`
+ * -   `fit-into` > `fitinto`
+ * -   `no-overlap` > `nooverlap`
+ * -   `position-target` > `positiontarget`
+ * -   `horizontal-align` > `horizontalalign`
+ * -   `vertical-align` > `verticalalign`
+ * -   `dynamic-align` > `dynamicalign`
+ * -   `horizontal-offset` > `horizontaloffset`
+ * -   `vertical-offset` > `verticaloffset`
+ * -   `auto-fit-on-attach` > `autofitonattach`
+ *
  * @param {Class} superClass
  * @return {Class}
  */
@@ -68,45 +84,46 @@ export const ArcFitMixin = (superClass) => class extends superClass {
        * for example, for implementing a scrolling region inside the element.
        * @type {!Element}
        */
-      sizingTarget: { type: Object, attribute: 'sizing-target' },
+      sizingTarget: { type: Object },
       /**
        * The element to fit `this` into.
+       * @type {!Element}
        */
-      fitInto: { type: Object, attribute: 'fit-into' },
+      fitInto: { type: Object },
       /**
        * Will position the element around the positionTarget without overlapping
        * it.
        */
-      noOverlap: { type: Boolean, attribute: 'no-overlap' },
+      noOverlap: { type: Boolean },
+      _oldNoOverlap: { type: Boolean, attribute: 'no-overlap' },
 
       /**
        * The element that should be used to position the element. If not set, it
        * will default to the parent node.
        * @type {!Element}
        */
-      positionTarget: { type: Element, attribute: 'position-target' },
-
+      positionTarget: { type: Object },
       /**
        * The orientation against which to align the element horizontally
        * relative to the `positionTarget`. Possible values are "left", "right",
        * "center", "auto".
        */
-
-       horizontalAlign: { type: String, attribute: 'horizontal-align' },
+       horizontalAlign: { type: String },
+       _oldHorizontalAlign: { type: String, attribute: 'horizontal-align' },
       /**
        * The orientation against which to align the element vertically
        * relative to the `positionTarget`. Possible values are "top", "bottom",
        * "middle", "auto".
        */
-      verticalAlign: { type: String, attribute: 'vertical-align' },
-
+      verticalAlign: { type: String },
+      _oldVerticalAlign: { type: String, attribute: 'vertical-align' },
       /**
        * If true, it will use `horizontalAlign` and `verticalAlign` values as
        * preferred alignment and if there's not enough space, it will pick the
        * values which minimize the cropping.
        */
-      dynamicAlign: { type: Boolean, attribute: 'dynamic-align' },
-
+      dynamicAlign: { type: Boolean },
+      _oldDynamicAlign: { type: Boolean, attribute: 'dynamic-align' },
       /**
        * A pixel value that will be added to the position calculated for the
        * given `horizontalAlign`, in the direction of alignment. You can think
@@ -121,8 +138,8 @@ export const ArcFitMixin = (superClass) => class extends superClass {
        * or decrease the distance to the right side of the screen: a negative
        * offset will move the dropdown to the right; a positive one, to the left.
        */
-      horizontalOffset: { type: Number, notify: true, attribute: 'horizontal-offset' },
-
+      horizontalOffset: { type: Number, reflect: true },
+      _oldHorizontalOffset: { type: Number, attribute: 'horizontal-offset' },
       /**
        * A pixel value that will be added to the position calculated for the
        * given `verticalAlign`, in the direction of alignment. You can think
@@ -137,12 +154,14 @@ export const ArcFitMixin = (superClass) => class extends superClass {
        * or decrease the distance to the bottom side of the screen: a negative
        * offset will move the dropdown downwards; a positive one, upwards.
        */
-      verticalOffset: { type: Number, notify: true, attribute: 'vertical-offset' },
+      verticalOffset: { type: Number, reflect: true },
+      _oldVerticalOffset: { type: Number, attribute: 'vertical-offset' },
 
       /**
        * Set to true to auto-fit on attach.
        */
-      autoFitOnAttach: { type: Boolean, reflect: true, attribute: 'auto-fit-on-attach' },
+      autoFitOnAttach: { type: Boolean, reflect: true },
+      _oldAutoFitOnAttach: { type: Boolean, attribute: 'auto-fit-on-attach' },
 
       /** @type {?Object} */
       _fitInfo: { type: Object }
@@ -234,6 +253,118 @@ export const ArcFitMixin = (superClass) => class extends superClass {
    */
   get __shouldPosition() {
     return (this.horizontalAlign || this.verticalAlign) && this.positionTarget;
+  }
+
+  get 'sizing-target'() {
+    return this.sizingTarget;
+  }
+
+  set 'sizing-target'(value) {
+    this.sizingTarget = value;
+  }
+
+  get 'fit-into'() {
+    return this.fitInto;
+  }
+
+  set 'fit-into'(value) {
+    this.fitInto = value;
+  }
+
+  get _oldNoOverlap() {
+    return this.noOverlap;
+  }
+
+  set _oldNoOverlap(value) {
+    this.noOverlap = value;
+  }
+
+  get 'position-target'() {
+    return this.positionTarget;
+  }
+
+  set 'position-target'(value) {
+    this.positionTarget = value;
+  }
+
+  get 'horizontal-align'() {
+    return this.horizontalAlign;
+  }
+
+  set 'horizontal-align'(value) {
+    this.horizontalAlign = value;
+  }
+
+  get _oldHorizontalAlign() {
+    return this.horizontalAlign;
+  }
+
+  set _oldHorizontalAlign(value) {
+    this.horizontalAlign = value;
+  }
+
+  get 'vertical-align'() {
+    return this.verticalAlign;
+  }
+
+  set 'vertical-align'(value) {
+    this.verticalAlign = value;
+  }
+
+  get _oldVerticalAlign() {
+    return this.verticalAlign;
+  }
+
+  set _oldVerticalAlign(value) {
+    this.verticalAlign = value;
+  }
+
+  get _oldDynamicAlign() {
+    return this.dynamicAlign;
+  }
+
+  set _oldDynamicAlign(value) {
+    this.dynamicAlign = value;
+  }
+
+  get _oldHorizontalOffset() {
+    return this.horizontalOffset;
+  }
+
+  set _oldHorizontalOffset(value) {
+    this.horizontalOffset = value;
+  }
+
+  get 'horizontal-offset'() {
+    return this.horizontalOffset;
+  }
+
+  set 'horizontal-offset'(value) {
+    this.horizontalOffset = value;
+  }
+
+  get _oldVerticalOffset() {
+    return this.verticalOffset;
+  }
+
+  set _oldVerticalOffset(value) {
+    this.verticalOffset = value;
+  }
+
+  get 'vertical-offset'() {
+    return this.verticalOffset;
+  }
+
+  set 'vertical-offset'(value) {
+    this.verticalOffset = value;
+  }
+
+  get _oldAutoFitOnAttach() {
+    return this.autoFitOnAttach;
+  }
+
+  set _oldAutoFitOnAttach(value) {
+    this.autoFitOnAttach = value;
   }
 
   connectedCallback() {

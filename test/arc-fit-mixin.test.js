@@ -1,8 +1,4 @@
-import {
-  fixture,
-  assert,
-  nextFrame
-} from '@open-wc/testing';
+import { fixture, assert, nextFrame, html } from '@open-wc/testing';
 
 import './test-fit.js';
 
@@ -87,42 +83,42 @@ describe('ArcFitMixin', () => {
 
   async function positionedXyFixture() {
     return await fixture(`
-      <test-fit auto-fit-on-attach class="sized-x positioned-left positioned-top">
+      <test-fit autofitonattach class="sized-x positioned-left positioned-top">
         Sized (x/y), positioned/positioned
       </test-fit>`);
   }
 
   async function inlinePositionedXyFixture() {
     return await fixture(`
-    <test-fit auto-fit-on-attach class="sized-x sized-y" style="position:absolute;left:100px;top:100px;">
+    <test-fit autofitonattach class="sized-x sized-y" style="position:absolute;left:100px;top:100px;">
       Sized (x/y), positioned/positioned
     </test-fit>`);
   }
 
   async function absoluteFixture() {
     return await fixture(`
-    <test-fit auto-fit-on-attach class="absolute">
+    <test-fit autofitonattach class="absolute">
       Absolutely positioned
     </test-fit>`);
   }
 
   async function sizedXyFixture() {
     return await fixture(`
-    <test-fit auto-fit-on-attach class="sized-x sized-y">
+    <test-fit autofitonattach class="sized-x sized-y">
       Sized (x/y), auto center/center
     </test-fit>`);
   }
 
   async function sizedXFixture() {
     return await fixture(`
-    <test-fit auto-fit-on-attach class="sized-x">
+    <test-fit autofitonattach class="sized-x">
       Sized (x), auto center/center
     </test-fit>`);
   }
 
   async function sectionedFixture() {
     return await fixture(`
-    <test-fit auto-fit-on-attach class="sized-x">
+    <test-fit autofitonattach class="sized-x">
       <div>
         Sized (x), auto center/center with scrolling section
       </div>
@@ -133,7 +129,7 @@ describe('ArcFitMixin', () => {
   async function constrainTargetFixture() {
     return await fixture(`
     <div class="constrain">
-      <test-fit auto-fit-on-attach class="el sized-x sized-y">
+      <test-fit autofitonattach class="el sized-x sized-y">
         <div>
           Auto center/center to parent element
         </div>
@@ -144,7 +140,7 @@ describe('ArcFitMixin', () => {
   async function offscreenContainerFixture() {
     return await fixture(`
     <div style="position: fixed; top: -1px; left: 0;">
-      <test-fit auto-fit-on-attach class="el sized-x">
+      <test-fit autofitonattach class="el sized-x">
         <div>
           Sized (x), auto center/center, container is offscreen
         </div>
@@ -158,7 +154,7 @@ describe('ArcFitMixin', () => {
 
   // async function scrollableFixture() {
   //   return await fixture(`
-  //   <test-fit auto-fit-on-attach class="scrolling">
+  //   <test-fit autofitonattach class="scrolling">
   //     scrollable
   //     <div class="sizer"></div>
   //   </test-fit>`);
@@ -1381,6 +1377,176 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.right, parentRect.right, 'right ok');
         assert.equal(rect.bottom, parentRect.top, 'bottom ok');
       });
+    });
+  });
+
+  describe('Attributes compatibility', () => {
+    it('Sets legacy sizing-target in the template', async () => {
+      const node = document.createElement('span');
+      const el = await fixture(html`<test-fit .sizing-target="${node}"></test-fit>`);
+      assert.isTrue(el.sizingTarget === node);
+    });
+
+    it('Gets legacy sizing-target in the template', async () => {
+      const node = document.createElement('span');
+      const el = await fixture(html`<test-fit .sizing-target="${node}"></test-fit>`);
+      assert.isTrue(el['sizing-target'] === node);
+    });
+
+    it('Sets legacy fit-into in the template', async () => {
+      const node = document.createElement('span');
+      const el = await fixture(html`<test-fit .fit-into="${node}"></test-fit>`);
+      assert.isTrue(el.fitInto === node);
+    });
+
+    it('Gets legacy fit-into', async () => {
+      const node = document.createElement('span');
+      const el = await fixture(html`<test-fit .fit-into="${node}"></test-fit>`);
+      assert.isTrue(el['fit-into'] === node);
+    });
+
+    it('Sets legacy no-overlap in the template from a variable', async () => {
+      const el = await fixture(html`<test-fit ?no-overlap="${true}"></test-fit>`);
+      assert.isTrue(el.noOverlap);
+    });
+
+    it('Sets legacy no-overlap in the template from a literal', async () => {
+      const el = await fixture(html`<test-fit no-overlap></test-fit>`);
+      assert.isTrue(el.noOverlap);
+    });
+
+    it('Gets legacy _oldNoOverlap', async () => {
+      const el = await fixture(html`<test-fit ?no-overlap="${true}"></test-fit>`);
+      assert.isTrue(el._oldNoOverlap);
+    });
+
+    it('Sets legacy position-target in the template', async () => {
+      const node = document.createElement('span');
+      const el = await fixture(html`<test-fit .position-target="${node}"></test-fit>`);
+      assert.isTrue(el.positionTarget === node);
+    });
+
+    it('Gets legacy position-target in the template', async () => {
+      const node = document.createElement('span');
+      const el = await fixture(html`<test-fit .position-target="${node}"></test-fit>`);
+      assert.isTrue(el['position-target'] === node);
+    });
+
+    it('Sets legacy horizontal-align in the template from a variable', async () => {
+      const value = 'auto';
+      const el = await fixture(html`<test-fit .horizontal-align="${value}"></test-fit>`);
+      assert.equal(el.horizontalAlign, value);
+    });
+
+    it('Sets legacy horizontal-align in the template from a literal', async () => {
+      const el = await fixture(html`<test-fit horizontal-align="auto"></test-fit>`);
+      assert.equal(el.horizontalAlign, 'auto');
+    });
+
+    it('Gets legacy horizontal-align', async () => {
+      const el = await fixture(html`<test-fit horizontal-align="auto"></test-fit>`);
+      assert.equal(el['horizontal-align'], 'auto');
+    });
+
+    it('Gets legacy horizontal-align', async () => {
+      const el = await fixture(html`<test-fit horizontal-align="auto"></test-fit>`);
+      assert.equal(el._oldHorizontalAlign, 'auto');
+    });
+
+    it('Sets legacy vertical-align in the template from a variable', async () => {
+      const value = 'auto';
+      const el = await fixture(html`<test-fit .vertical-align="${value}"></test-fit>`);
+      assert.equal(el.verticalAlign, value);
+    });
+
+    it('Sets legacy vertical-align in the template from a literal', async () => {
+      const value = 'auto';
+      const el = await fixture(html`<test-fit vertical-align="auto"></test-fit>`);
+      assert.equal(el.verticalAlign, value);
+    });
+
+    it('Gets legacy vertical-align', async () => {
+      const value = 'auto';
+      const el = await fixture(html`<test-fit vertical-align="auto"></test-fit>`);
+      assert.equal(el['vertical-align'], value);
+    });
+
+    it('Gets legacy _oldVerticalAlign', async () => {
+      const value = 'auto';
+      const el = await fixture(html`<test-fit vertical-align="auto"></test-fit>`);
+      assert.equal(el._oldVerticalAlign, value);
+    });
+
+    it('Sets legacy dynamic-align in the template from a variable', async () => {
+      const el = await fixture(html`<test-fit ?dynamic-align="${true}"></test-fit>`);
+      assert.isTrue(el.dynamicAlign);
+    });
+
+    it('Sets legacy dynamic-align in the template from a literal', async () => {
+      const el = await fixture(html`<test-fit dynamic-align></test-fit>`);
+      assert.isTrue(el.dynamicAlign);
+    });
+
+    it('Gets legacy dynamic-align', async () => {
+      const el = await fixture(html`<test-fit dynamic-align></test-fit>`);
+      assert.isTrue(el._oldDynamicAlign);
+    });
+
+    it('Sets legacy horizontal-offset in the template from a variable', async () => {
+      const value = 42;
+      const el = await fixture(html`<test-fit .horizontal-offset="${value}"></test-fit>`);
+      assert.equal(el.horizontalOffset, value);
+    });
+
+    it('Sets legacy horizontal-offset in the template from a literal', async () => {
+      const el = await fixture(html`<test-fit horizontal-offset="42"></test-fit>`);
+      assert.equal(el.horizontalOffset, 42);
+    });
+
+    it('Gets legacy horizontal-offset', async () => {
+      const el = await fixture(html`<test-fit horizontal-offset="42"></test-fit>`);
+      assert.equal(el['horizontal-offset'], 42);
+    });
+
+    it('Gets legacy _oldHorizontalOffset', async () => {
+      const el = await fixture(html`<test-fit horizontal-offset="42"></test-fit>`);
+      assert.equal(el._oldHorizontalOffset, 42);
+    });
+
+    it('Sets legacy vertical-offset in the template from a variable', async () => {
+      const value = 42;
+      const el = await fixture(html`<test-fit .vertical-offset="${value}"></test-fit>`);
+      assert.equal(el.verticalOffset, value);
+    });
+
+    it('Sets legacy vertical-offset in the template from a literal', async () => {
+      const el = await fixture(html`<test-fit vertical-offset="42"></test-fit>`);
+      assert.equal(el.verticalOffset, 42);
+    });
+
+    it('Gets legacy vertical-offset', async () => {
+      const el = await fixture(html`<test-fit vertical-offset="42"></test-fit>`);
+      assert.equal(el['vertical-offset'], 42);
+    });
+
+    it('Gets legacy _oldVerticalOffset', async () => {
+      const el = await fixture(html`<test-fit vertical-offset="42"></test-fit>`);
+      assert.equal(el._oldVerticalOffset, 42);
+    });
+
+    it('Sets legacy auto-fit-on-attach in the template from a variable', async () => {
+      const el = await fixture(html`<test-fit ?auto-fit-on-attach="${true}"></test-fit>`);
+      assert.isTrue(el.autoFitOnAttach);
+    });
+
+    it('Sets legacy auto-fit-on-attach in the template from a literal', async () => {
+      const el = await fixture(html`<test-fit auto-fit-on-attach></test-fit>`);
+      assert.isTrue(el.autoFitOnAttach);
+    });
+
+    it('Gets legacy auto-fit-on-attach', async () => {
+      const el = await fixture(html`<test-fit auto-fit-on-attach></test-fit>`);
+      assert.isTrue(el._oldAutoFitOnAttach);
     });
   });
 });
