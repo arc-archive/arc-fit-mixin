@@ -40,15 +40,15 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@advanced-rest-client/arc-demo-helper": "^1.0.4",
-    "@advanced-rest-client/testing-karma-sl": "^1.0.2",
-    "@open-wc/testing": "^2.1.2",
-    "@open-wc/testing-karma": "^3.1.2",
+    "@advanced-rest-client/arc-demo-helper": "^1.0.16",
+    "@advanced-rest-client/testing-karma-sl": "^1.1.0",
+    "@open-wc/testing": "^2.4.2",
+    "@open-wc/testing-karma": "^3.2.15",
     "@polymer/gen-typescript-declarations": "^1.6.2",
-    "deepmerge": "^4.0.0",
-    "lit-element": "^2.2.0",
-    "lit-html": "^1.1.1",
+    "deepmerge": "^4.2.2",
+    "lit-element": "^2.2.1",
+    "lit-html": "^1.1.2",
     "owc-dev-server": "^0.3.0",
-    "webpack-merge": "^4.1.5"
+    "webpack-merge": "^4.2.2"
   }
 }
