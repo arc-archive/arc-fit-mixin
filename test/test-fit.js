@@ -14,6 +14,7 @@ class TestFit extends ArcFitMixin(LitElement) {
 
   static get properties() {
     return {
+      // DO NOT REMOVE
       myProp: { type: String, attribute: 'my-prop' }
     };
   }
