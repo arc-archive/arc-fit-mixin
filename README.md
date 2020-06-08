@@ -1,6 +1,6 @@
 [![Published on NPM](https://img.shields.io/npm/v/@advanced-rest-client/arc-fit-mixin.svg)](https://www.npmjs.com/package/@advanced-rest-client/arc-fit-mixin)
 
-[![Build Status](https://travis-ci.org/advanced-rest-client/arc-fit-mixin.svg?branch=stage)](https://travis-ci.org/advanced-rest-client/arc-fit-mixin)
+[![Build Status](https://travis-ci.com/advanced-rest-client/arc-fit-mixin.svg)](https://travis-ci.com/advanced-rest-client/arc-fit-mixin)
 
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/advanced-rest-client/arc-fit-mixin)
 
@@ -20,9 +20,9 @@ This mixin is a port of [iron-fit-behavior](https://github.com/PolymerElements/i
 
 ```html
 <div class="container">
-  <iron-fit-impl verticalalign="top" horizontalalign="auto">
+  <arc-fit-impl verticalalign="top" horizontalalign="auto">
     Positioned into the container
-  </iron-fit-impl>
+  </arc-fit-impl>
 </div>
 ```
 
@@ -30,22 +30,22 @@ Use `noOverlap` to position the element around another element without overlappi
 
 ```html
 <div class="container">
-  <iron-fit-impl nooverlap verticalalign="auto" horizontalalign="auto">
+  <arc-fit-impl nooverlap verticalalign="auto" horizontalalign="auto">
     Positioned around the container
-  </iron-fit-impl>
+  </arc-fit-impl>
 </div>
 ```
 
 Use `horizontalOffset, verticalOffset` to offset the element from its
-`positionTarget`; `Polymer.IronFitBehavior` will collapse these in order to
+`positionTarget`; `ArcFitMixin` will collapse these in order to
 keep the element within `fitInto` boundaries, while preserving the element's
 CSS margin values.
 
 ```html
 <div class="container">
-  <iron-fit-impl verticalalign="top" verticaloffset="20">
+  <arc-fit-impl verticalalign="top" verticaloffset="20">
     With vertical offset
-  </iron-fit-impl>
+  </arc-fit-impl>
 </div>
 ```
 
@@ -75,7 +75,7 @@ npm i @advanced-rest-client/arc-fit-mixin
 
 ```javascript
 import { LitElement } from 'lit-element';
-import { ArcFitMixin } from '@advanced-rest-client/arc-fit-mixin/arc-fit-mixin.js';
+import { ArcFitMixin } from '@advanced-rest-client/arc-fit-mixin';
 
 class ArcFitImpl extends ArcFitMixin(LitElement) {
   static get properties() {

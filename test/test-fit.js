@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
-import { ArcFitMixin } from '../arc-fit-mixin.js';
+import { ArcFitMixin } from '../index.js';
 
 class TestFit extends ArcFitMixin(LitElement) {
   static get styles() {

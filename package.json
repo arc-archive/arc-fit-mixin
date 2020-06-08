@@ -1,7 +1,10 @@
 {
   "name": "@advanced-rest-client/arc-fit-mixin",
-  "version": "1.0.3",
   "description": "arc-fit-mixin is a port of iron-fit-behavior that works with web components",
+  "version": "1.1.0",
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "module": "index.js",
   "keywords": [
     "api-components",
     "arc-components",
@@ -9,64 +12,89 @@
     "web-components",
     "positioning"
   ],
+  "homepage": "https://github.com/advanced-rest-client/arc-fit-mixin",
+  "authors": [
+    "Pawel Psztyc"
+  ],
+  "contributors": [
+    "Your name can be here!"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/advanced-rest-client/arc-fit-mixin.git"
   },
-  "homepage": "https://github.com/advanced-rest-client/arc-fit-mixin",
-  "license": "Apache-2.0",
-  "main": "arc-fit-mixin.js",
-  "authors": [
-    "Pawel Psztyc",
-    "The Advanced REST client authors <arc@mulesoft.com>"
-  ],
-  "contributors": [
-    "Pawel Psztyc",
-    "The Advanced REST client authors <arc@mulesoft.com>"
-  ],
   "bugs": {
     "url": "https://github.com/advanced-rest-client/arc-fit-mixin/issues",
     "email": "arc@mulesoft.com"
   },
   "scripts": {
-    "test": "karma start --coverage",
     "start": "es-dev-server --app-index demo/index.html --node-resolve --open --watch",
-    "start:compatibility": "es-dev-server --app-index demo/index.html --compatibility auto --node-resolve --open --watch",
-    "lint:eslint": "eslint --ext .js,.html .",
-    "format:eslint": "eslint --ext .js,.html . --fix",
-    "lint:prettier": "prettier \"**/*.js\" --list-different || (echo '↑↑ these files are not prettier formatted ↑↑' && exit 1)",
-    "format:prettier": "prettier \"**/*.js\" --write",
+    "lint:eslint": "eslint --ext .js,.html . --ignore-path .gitignore",
+    "format:eslint": "eslint --ext .js,.html . --fix --ignore-path .gitignore",
+    "lint:prettier": "prettier \"**/*.js\" --check --ignore-path .gitignore",
+    "format:prettier": "prettier \"**/*.js\" --write --ignore-path .gitignore",
+    "lint:types": "tsc",
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "format": "npm run format:eslint && npm run format:prettier",
+    "test": "karma start --coverage",
     "test:watch": "karma start --auto-watch=true --single-run=false",
-    "test:legacy": "karma start --compatibility auto --coverage",
-    "test:legacy:watch": "karma start --compatibility auto --auto-watch=true --single-run=false",
-    "test:sl": "karma start karma.sl.config.js --compatibility auto --coverage",
-    "update-types": "gen-typescript-declarations --deleteExisting --outDir ."
+    "test:sl": "karma start karma.sl.config.js --compatibility auto --coverage"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@open-wc/dedupe-mixin": "^1.2.17"
+  },
   "devDependencies": {
-    "@advanced-rest-client/eslint-config": "^1.1.4",
-    "@advanced-rest-client/prettier-config": "^0.1.0",
-    "@advanced-rest-client/arc-demo-helper": "^1.0.16",
-    "@advanced-rest-client/testing-karma-sl": "^1.1.0",
-    "@commitlint/cli": "^8.2.0",
-    "@commitlint/config-conventional": "^7.0.0",
-    "@open-wc/testing": "^2.4.2",
-    "@open-wc/testing-karma": "^3.2.15",
-    "@polymer/gen-typescript-declarations": "^1.6.2",
+    "@advanced-rest-client/arc-demo-helper": "^2.0.0",
+    "@advanced-rest-client/testing-karma-sl": "^1.3.1",
+    "@open-wc/eslint-config": "^2.0.0",
+    "@open-wc/testing": "^2.5.17",
+    "@open-wc/testing-karma": "^3.4.2",
     "deepmerge": "^4.2.2",
-    "lit-element": "^2.2.1",
-    "lit-html": "^1.1.2",
-    "es-dev-server": "^1.30.0",
-    "husky": "^1.0.0",
-    "karma": "^4.4.1",
-    "lint-staged": "^9.5.0"
+    "es-dev-server": "^1.54.1",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.6",
+    "lit-element": "^2.3.1",
+    "lit-html": "^1.2.1",
+    "prettier": "^2.0.5",
+    "sinon": "^9.0.2",
+    "typescript": "^3.9.2",
+    "typescript-lit-html-plugin": "^0.9.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@open-wc/eslint-config",
+      "eslint-config-prettier"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/demo/**/*.js",
+          "**/demo/**/*.html"
+        ],
+        "rules": {
+          "no-console": "off",
+          "no-plusplus": "off",
+          "no-unused-expressions": "off",
+          "class-methods-use-this": "off",
+          "import/no-extraneous-dependencies": "off"
+        }
+      }
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "always"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
   }
 }
