@@ -86,46 +86,46 @@ document.body.appendChild(tpl);
 
 describe('ArcFitMixin', () => {
   async function basicFixture() {
-    return await fixture('<test-fit>Basic</test-fit>');
+    return fixture('<test-fit>Basic</test-fit>');
   }
 
   async function positionedXyFixture() {
-    return await fixture(`
+    return fixture(`
       <test-fit autofitonattach class="sized-x positioned-left positioned-top">
         Sized (x/y), positioned/positioned
       </test-fit>`);
   }
 
   async function inlinePositionedXyFixture() {
-    return await fixture(`
+    return fixture(`
     <test-fit autofitonattach class="sized-x sized-y" style="position:absolute;left:100px;top:100px;">
       Sized (x/y), positioned/positioned
     </test-fit>`);
   }
 
   async function absoluteFixture() {
-    return await fixture(`
+    return fixture(`
     <test-fit autofitonattach class="absolute">
       Absolutely positioned
     </test-fit>`);
   }
 
   async function sizedXyFixture() {
-    return await fixture(`
+    return fixture(`
     <test-fit autofitonattach class="sized-x sized-y">
       Sized (x/y), auto center/center
     </test-fit>`);
   }
 
   async function sizedXFixture() {
-    return await fixture(`
+    return fixture(`
     <test-fit autofitonattach class="sized-x">
       Sized (x), auto center/center
     </test-fit>`);
   }
 
   async function sectionedFixture() {
-    return await fixture(`
+    return fixture(`
     <test-fit autofitonattach class="sized-x">
       <div>
         Sized (x), auto center/center with scrolling section
@@ -135,7 +135,7 @@ describe('ArcFitMixin', () => {
   }
 
   async function constrainTargetFixture() {
-    return await fixture(`
+    return fixture(`
     <div class="constrain">
       <test-fit autofitonattach class="el sized-x sized-y">
         <div>
@@ -146,7 +146,7 @@ describe('ArcFitMixin', () => {
   }
 
   async function offscreenContainerFixture() {
-    return await fixture(`
+    return fixture(`
     <div style="position: fixed; top: -1px; left: 0;">
       <test-fit autofitonattach class="el sized-x">
         <div>
@@ -157,7 +157,7 @@ describe('ArcFitMixin', () => {
   }
 
   async function hostPropertiesFixture() {
-    return await fixture(`<test-fit my-prop="test-value"></test-fit>`);
+    return fixture(`<test-fit my-prop="test-value"></test-fit>`);
   }
 
   // async function scrollableFixture() {
@@ -171,7 +171,7 @@ describe('ArcFitMixin', () => {
   function makeScrolling(el) {
     el.classList.add('scrolling');
     const template = document.getElementById('ipsum');
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 20; i += 1) {
       el.appendChild(template.content.cloneNode(true));
     }
   }
@@ -197,8 +197,8 @@ describe('ArcFitMixin', () => {
       const element = await basicFixture();
       element.constrain();
       const style = getComputedStyle(element);
-      assert.equal(style.maxWidth, window.innerWidth + 'px', 'maxWidth ok');
-      assert.equal(style.maxHeight, window.innerHeight + 'px', 'maxHeight ok');
+      assert.equal(style.maxWidth, `${window.innerWidth  }px`, 'maxWidth ok');
+      assert.equal(style.maxHeight, `${window.innerHeight  }px`, 'maxHeight ok');
     });
 
     it('center() works without autoFitOnAttach', async () => {
@@ -225,12 +225,12 @@ describe('ArcFitMixin', () => {
     });
 
     it('Computes _fitWidth for fit element', async () => {
-      const constrain = document.querySelector('.constrain');
+      const constrainElement = document.querySelector('.constrain');
       const element = await basicFixture();
       element.fitInto = constrain;
       await nextFrame();
       const result = element._fitWidth;
-      assert.equal(result, constrain.getBoundingClientRect().width);
+      assert.equal(result, constrainElement.getBoundingClientRect().width);
     });
 
     it('Computes _fitHeight for window', async () => {
@@ -241,12 +241,12 @@ describe('ArcFitMixin', () => {
     });
 
     it('Computes _fitHeight for fit element', async () => {
-      const constrain = document.querySelector('.constrain');
+      const constrainElement = document.querySelector('.constrain');
       const element = await basicFixture();
-      element.fitInto = constrain;
+      element.fitInto = constrainElement;
       await nextFrame();
       const result = element._fitHeight;
-      assert.equal(result, constrain.getBoundingClientRect().height);
+      assert.equal(result, constrainElement.getBoundingClientRect().height);
     });
 
     it('Computes _fitLeft for window', async () => {
@@ -257,12 +257,12 @@ describe('ArcFitMixin', () => {
     });
 
     it('Computes _fitLeft for fit element', async () => {
-      const constrain = document.querySelector('.constrain');
+      const constrainElement = document.querySelector('.constrain');
       const element = await basicFixture();
-      element.fitInto = constrain;
+      element.fitInto = constrainElement;
       await nextFrame();
       const result = element._fitLeft;
-      assert.equal(result, constrain.getBoundingClientRect().left);
+      assert.equal(result, constrainElement.getBoundingClientRect().left);
     });
 
     it('Computes _fitTop for window', async () => {
@@ -273,12 +273,12 @@ describe('ArcFitMixin', () => {
     });
 
     it('Computes _fitTop for fit element', async () => {
-      const constrain = document.querySelector('.constrain');
+      const constrainElement = document.querySelector('.constrain');
       const element = await basicFixture();
-      element.fitInto = constrain;
+      element.fitInto = constrainElement;
       await nextFrame();
       const result = element._fitTop;
-      assert.equal(result, constrain.getBoundingClientRect().top);
+      assert.equal(result, constrainElement.getBoundingClientRect().top);
     });
 
     it('Computes _localeHorizontalAlign for RTL - right', async () => {
@@ -381,11 +381,11 @@ describe('ArcFitMixin', () => {
     });
 
     it.skip('sized element with transformed parent is centered in viewport', async () => {
-      const constrain = await constrainTargetFixture();
+      const constrainElement = await constrainTargetFixture();
       await aTimeout();
-      const el = constrain.querySelector('.el');
+      const el = constrainElement.querySelector('.el');
       const rectBefore = el.getBoundingClientRect();
-      constrain.style.transform = 'translate3d(5px, 5px, 0)';
+      constrainElement.style.transform = 'translate3d(5px, 5px, 0)';
       el.center();
       const rectAfter = el.getBoundingClientRect();
       assert.equal(rectBefore.top, rectAfter.top, 'top ok');
@@ -545,14 +545,14 @@ describe('ArcFitMixin', () => {
 
   describe('fit to element', () => {
     it('element fits in another element', async () => {
-      const constrain = await constrainTargetFixture();
+      const constrainElement = await constrainTargetFixture();
       await nextFrame();
-      const el = constrain.querySelector('.el');
+      const el = constrainElement.querySelector('.el');
       makeScrolling(el);
-      el.fitInto = constrain;
+      el.fitInto = constrainElement;
       el.refit();
       const rect = el.getBoundingClientRect();
-      const crect = constrain.getBoundingClientRect();
+      const crect = constrainElement.getBoundingClientRect();
       assert.isTrue(rect.height <= crect.height,
         'width is less than or equal to fitInto width');
       assert.isTrue(rect.height <= crect.height,
@@ -560,14 +560,14 @@ describe('ArcFitMixin', () => {
     });
 
     it('element centers in another element', async () => {
-      const constrain = await constrainTargetFixture();
+      const constrainElement = await constrainTargetFixture();
       await nextFrame();
-      const el = constrain.querySelector('.el');
+      const el = constrainElement.querySelector('.el');
       makeScrolling(el);
-      el.fitInto = constrain;
+      el.fitInto = constrainElement;
       el.refit();
       const rect = el.getBoundingClientRect();
-      const crect = constrain.getBoundingClientRect();
+      const crect = constrainElement.getBoundingClientRect();
       assert.closeTo(rect.left - crect.left - (crect.right - rect.right),
         0, 5, 'centered horizontally in fitInto');
       assert.closeTo(rect.top - crect.top - (crect.bottom - rect.bottom),
@@ -575,14 +575,14 @@ describe('ArcFitMixin', () => {
     });
 
     it('element with max-width centers in another element', async () => {
-      const constrain = document.querySelector('.constrain');
+      const constrainElement = document.querySelector('.constrain');
       const el = await sizedXyFixture();
       await nextFrame();
       el.classList.add('with-max-width');
-      el.fitInto = constrain;
+      el.fitInto = constrainElement;
       el.refit();
       const rect = el.getBoundingClientRect();
-      const crect = constrain.getBoundingClientRect();
+      const crect = constrainElement.getBoundingClientRect();
       assert.closeTo(rect.left - crect.left - (crect.right - rect.right),
         0, 5, 'centered horizontally in fitInto');
       assert.closeTo(rect.top - crect.top - (crect.bottom - rect.bottom),
@@ -590,16 +590,16 @@ describe('ArcFitMixin', () => {
     });
 
     it('positioned element fits in another element', async () => {
-      const constrain = document.querySelector('.constrain');
+      const constrainElement = document.querySelector('.constrain');
       const el = await sizedXyFixture();
       await nextFrame();
       // element's positionTarget is `body`, and fitInto is `constrain`.
       el.verticalAlign = 'top';
       el.horizontalAlign = 'left';
-      el.fitInto = constrain;
+      el.fitInto = constrainElement;
       el.refit();
       const rect = el.getBoundingClientRect();
-      const crect = constrain.getBoundingClientRect();
+      const crect = constrainElement.getBoundingClientRect();
       assert.equal(rect.top, crect.top, 'top ok');
       assert.equal(rect.left, crect.left, 'left ok');
     });
@@ -627,7 +627,7 @@ describe('ArcFitMixin', () => {
       elRect = el.getBoundingClientRect();
     });
 
-    it('intersects works', function() {
+    it('intersects works', () => {
       const base = {
         top: 0,
         bottom: 1,
@@ -661,8 +661,8 @@ describe('ArcFitMixin', () => {
         'no intersect');
     });
 
-    describe('when verticalAlign is top', function() {
-      it('element is aligned to the positionTarget top', function() {
+    describe('when verticalAlign is top', () => {
+      it('element is aligned to the positionTarget top', () => {
         el.verticalAlign = 'top';
         el.refit();
         const rect = el.getBoundingClientRect();
@@ -670,7 +670,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.height, elRect.height, 'no cropping');
       });
 
-      it('element is aligned to the positionTarget top without overlapping it', function() {
+      it('element is aligned to the positionTarget top without overlapping it', () => {
         // Allow enough space on the parent's bottom & right.
         parent.style.width = '10px';
         parent.style.height = '10px';
@@ -683,7 +683,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.height, elRect.height, 'no cropping');
       });
 
-      it('element margin is considered as offset', function() {
+      it('element margin is considered as offset', () => {
         el.verticalAlign = 'top';
         el.style.marginTop = '10px';
         el.refit();
@@ -697,7 +697,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.height, elRect.height, 'no cropping');
       });
 
-      it('verticalOffset is applied', function() {
+      it('verticalOffset is applied', () => {
         el.verticalAlign = 'top';
         el.verticalOffset = 10;
         el.refit();
@@ -706,7 +706,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.height, elRect.height, 'no cropping');
       });
 
-      it('element is kept in viewport', function() {
+      it('element is kept in viewport', () => {
         el.verticalAlign = 'top';
         // Make it go out of screen
         el.verticalOffset = -1000;
@@ -716,9 +716,9 @@ describe('ArcFitMixin', () => {
         assert.isTrue(rect.height < elRect.height, 'reduced size');
       });
 
-      it('negative verticalOffset does not crop element', function() {
+      it('negative verticalOffset does not crop element', () => {
         // Push to the bottom of the screen.
-        parent.style.top = (window.innerHeight - 50) + 'px';
+        parent.style.top = `${window.innerHeight - 50  }px`;
         el.verticalAlign = 'top';
         el.verticalOffset = -10;
         el.refit();
@@ -726,7 +726,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.top, window.innerHeight - 60, 'top ok');
         assert.equal(rect.bottom, window.innerHeight, 'bottom ok');
       });
-      it('max-height is updated', function() {
+      it('max-height is updated', () => {
         parent.style.top = '-10px';
         el.verticalAlign = 'top';
         el.refit();
@@ -735,10 +735,10 @@ describe('ArcFitMixin', () => {
         assert.isBelow(rect.height, elRect.height, 'height ok');
       });
 
-      it('min-height is preserved: element is displayed even if partially', function() {
+      it('min-height is preserved: element is displayed even if partially', () => {
         parent.style.top = '-10px';
         el.verticalAlign = 'top';
-        el.style.minHeight = elRect.height + 'px';
+        el.style.minHeight = `${elRect.height  }px`;
         el.refit();
         const rect = el.getBoundingClientRect();
         assert.equal(rect.top, 0, 'top ok');
@@ -746,7 +746,7 @@ describe('ArcFitMixin', () => {
         assert.isTrue(intersects(rect, fitRect), 'partially visible');
       });
 
-      it('dynamicAlign will prefer bottom align if it minimizes the cropping', function() {
+      it('dynamicAlign will prefer bottom align if it minimizes the cropping', () => {
         parent.style.top = '-10px';
         parentRect = parent.getBoundingClientRect();
         el.verticalAlign = 'top';
@@ -756,10 +756,26 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.bottom, parentRect.bottom, 'bottom ok');
         assert.equal(rect.height, elRect.height, 'no cropping');
       });
+
+      it('position() changes element width when fitPositionTarget enabled', async () => {
+        el.verticalAlign = 'top';
+        el.fitPositionTarget = true;
+        el.refit();
+        const rect = el.getBoundingClientRect();
+        assert.equal(rect.width, 150, 'width ok');
+      });
+
+      it('position() does not change element width when fitPositionTarget disabled', async () => {
+        el.verticalAlign = 'top';
+        el.fitPositionTarget = false;
+        el.refit();
+        const rect = el.getBoundingClientRect();
+        assert.equal(rect.width, 100, 'width ok');
+      });
     });
 
-    describe('when verticalAlign is bottom', function() {
-      it('element is aligned to the positionTarget bottom', function() {
+    describe('when verticalAlign is bottom', () => {
+      it('element is aligned to the positionTarget bottom', () => {
         el.verticalAlign = 'bottom';
         el.refit();
         const rect = el.getBoundingClientRect();
@@ -767,7 +783,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.height, elRect.height, 'no cropping');
       });
 
-      it('element is aligned to the positionTarget bottom without overlapping it', function() {
+      it('element is aligned to the positionTarget bottom without overlapping it', () => {
         el.verticalAlign = 'bottom';
         el.noOverlap = true;
         el.refit();
@@ -776,7 +792,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.height, elRect.height, 'no cropping');
       });
 
-      it('element margin is considered as offset', function() {
+      it('element margin is considered as offset', () => {
         el.verticalAlign = 'bottom';
         el.style.marginBottom = '10px';
         el.refit();
@@ -790,7 +806,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.height, elRect.height, 'no cropping');
       });
 
-      it('verticalOffset is applied', function() {
+      it('verticalOffset is applied', () => {
         el.verticalAlign = 'bottom';
         el.verticalOffset = 10;
         el.refit();
@@ -799,7 +815,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.height, elRect.height, 'no cropping');
       });
 
-      it('element is kept in viewport', function() {
+      it('element is kept in viewport', () => {
         el.verticalAlign = 'bottom';
         // Make it go out of screen
         el.verticalOffset = 1000;
@@ -809,8 +825,8 @@ describe('ArcFitMixin', () => {
         assert.isTrue(rect.height < elRect.height, 'reduced size');
       });
 
-      it('element max-height is updated', function() {
-        parent.style.top = (100 - parentRect.height) + 'px';
+      it('element max-height is updated', () => {
+        parent.style.top = `${100 - parentRect.height  }px`;
         el.verticalAlign = 'bottom';
         el.refit();
         const rect = el.getBoundingClientRect();
@@ -818,10 +834,10 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.height, 100, 'height ok');
       });
 
-      it('min-height is preserved: element is displayed even if partially', function() {
-        parent.style.top = (elRect.height - 10 - parentRect.height) + 'px';
+      it('min-height is preserved: element is displayed even if partially', () => {
+        parent.style.top = `${elRect.height - 10 - parentRect.height  }px`;
         el.verticalAlign = 'bottom';
-        el.style.minHeight = elRect.height + 'px';
+        el.style.minHeight = `${elRect.height  }px`;
         el.refit();
         const rect = el.getBoundingClientRect();
         assert.equal(rect.top, 0, 'top ok');
@@ -829,8 +845,8 @@ describe('ArcFitMixin', () => {
         assert.isTrue(intersects(rect, fitRect), 'partially visible');
       });
 
-      it('dynamicAlign will prefer top align if it minimizes the cropping', function() {
-        parent.style.top = (window.innerHeight - elRect.height) + 'px';
+      it('dynamicAlign will prefer top align if it minimizes the cropping', () => {
+        parent.style.top = `${window.innerHeight - elRect.height  }px`;
         parentRect = parent.getBoundingClientRect();
         el.verticalAlign = 'bottom';
         el.dynamicAlign = true;
@@ -841,8 +857,8 @@ describe('ArcFitMixin', () => {
       });
     });
 
-    describe('when verticalAlign is middle', function() {
-      it('element is aligned to the positionTarget middle', function() {
+    describe('when verticalAlign is middle', () => {
+      it('element is aligned to the positionTarget middle', () => {
         el.verticalAlign = 'middle';
         el.refit();
         const rect = el.getBoundingClientRect();
@@ -853,7 +869,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.height, elRect.height, 'no cropping');
       });
 
-      it('element is aligned to the positionTarget top without overlapping it', function() {
+      it('element is aligned to the positionTarget top without overlapping it', () => {
         // Allow enough space on the parent's bottom & right.
         el.verticalAlign = 'middle';
         el.noOverlap = true;
@@ -863,7 +879,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.height, elRect.height, 'no cropping');
       });
 
-      it('element margin is considered as offset', function() {
+      it('element margin is considered as offset', () => {
         el.verticalAlign = 'middle';
         el.style.marginTop = '10px';
         el.refit();
@@ -883,7 +899,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.height, elRect.height, 'no cropping');
       });
 
-      it('verticalOffset is applied', function() {
+      it('verticalOffset is applied', () => {
         el.verticalAlign = 'middle';
         el.verticalOffset = 10;
         el.refit();
@@ -895,7 +911,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.height, elRect.height, 'no cropping');
       });
 
-      it('element is kept in viewport', function() {
+      it('element is kept in viewport', () => {
         el.verticalAlign = 'middle';
         // Make it go out of screen
         el.verticalOffset = -1000;
@@ -905,9 +921,9 @@ describe('ArcFitMixin', () => {
         assert.isTrue(rect.height < elRect.height, 'reduced size');
       });
 
-      it('negative verticalOffset does not crop element', function() {
+      it('negative verticalOffset does not crop element', () => {
         // Push to the bottom of the screen.
-        parent.style.top = (window.innerHeight - 50) + 'px';
+        parent.style.top = `${window.innerHeight - 50  }px`;
         el.verticalAlign = 'middle';
         el.verticalOffset = -10;
         el.refit();
@@ -916,7 +932,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.bottom, window.innerHeight, 'bottom ok');
       });
 
-      it('max-height is updated', function() {
+      it('max-height is updated', () => {
         parent.style.top = '-50px';
         el.verticalAlign = 'middle';
         el.refit();
@@ -925,10 +941,10 @@ describe('ArcFitMixin', () => {
         assert.isBelow(rect.height, elRect.height, 'height ok');
       });
 
-      it('min-height is preserved: element is displayed even if partially', function() {
+      it('min-height is preserved: element is displayed even if partially', () => {
         parent.style.top = '-50px';
         el.verticalAlign = 'middle';
-        el.style.minHeight = elRect.height + 'px';
+        el.style.minHeight = `${elRect.height  }px`;
         el.refit();
         const rect = el.getBoundingClientRect();
         assert.equal(rect.top, 0, 'top ok');
@@ -936,7 +952,7 @@ describe('ArcFitMixin', () => {
         assert.isTrue(intersects(rect, fitRect), 'partially visible');
       });
 
-      it('dynamicAlign will prefer bottom align if it minimizes the cropping', function() {
+      it('dynamicAlign will prefer bottom align if it minimizes the cropping', () => {
         parent.style.top = '-50px';
         parentRect = parent.getBoundingClientRect();
         el.verticalAlign = 'middle';
@@ -948,8 +964,8 @@ describe('ArcFitMixin', () => {
       });
     });
 
-    describe('when verticalAlign is auto', function() {
-      it('element is aligned to the positionTarget top', function() {
+    describe('when verticalAlign is auto', () => {
+      it('element is aligned to the positionTarget top', () => {
         el.verticalAlign = 'auto';
         el.refit();
         const rect = el.getBoundingClientRect();
@@ -957,7 +973,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.height, elRect.height, 'no cropping');
       });
 
-      it('element is aligned to the positionTarget top without overlapping it', function() {
+      it('element is aligned to the positionTarget top without overlapping it', () => {
         // Allow enough space on the parent's bottom & right.
         parent.style.width = '10px';
         parent.style.height = '10px';
@@ -970,7 +986,7 @@ describe('ArcFitMixin', () => {
         assert.isFalse(intersects(rect, parentRect), 'no overlap');
       });
 
-      it('bottom is preferred to top if it diminishes the cropped area', function() {
+      it('bottom is preferred to top if it diminishes the cropped area', () => {
         // This would cause a cropping of the element, so it should
         // automatically align to the bottom to avoid it.
         parent.style.top = '-10px';
@@ -984,7 +1000,7 @@ describe('ArcFitMixin', () => {
       });
 
       it('bottom is preferred to top if it diminishes the cropped area, without overlapping positionTarget',
-        function() {
+        () => {
           // This would cause a cropping of the element, so it should
           // automatically align to the bottom to avoid it.
           parent.style.top = '-10px';
@@ -998,8 +1014,8 @@ describe('ArcFitMixin', () => {
         });
     });
 
-    describe('when horizontalAlign is left', function() {
-      it('element is aligned to the positionTarget left', function() {
+    describe('when horizontalAlign is left', () => {
+      it('element is aligned to the positionTarget left', () => {
         el.horizontalAlign = 'left';
         el.refit();
         const rect = el.getBoundingClientRect();
@@ -1007,7 +1023,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.width, elRect.width, 'no cropping');
       });
 
-      it('element is aligned to the positionTarget left without overlapping it', function() {
+      it('element is aligned to the positionTarget left without overlapping it', () => {
         // Make space at the parent's right.
         parent.style.width = '10px';
         parentRect = parent.getBoundingClientRect();
@@ -1019,7 +1035,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.width, elRect.width, 'no cropping');
       });
 
-      it('element margin is considered as offset', function() {
+      it('element margin is considered as offset', () => {
         el.horizontalAlign = 'left';
         el.style.marginLeft = '10px';
         el.refit();
@@ -1033,7 +1049,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.width, elRect.width, 'no cropping');
       });
 
-      it('horizontalOffset is applied', function() {
+      it('horizontalOffset is applied', () => {
         el.horizontalAlign = 'left';
         el.horizontalOffset = 10;
         el.refit();
@@ -1042,7 +1058,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.width, elRect.width, 'no cropping');
       });
 
-      it('element is kept in viewport', function() {
+      it('element is kept in viewport', () => {
         el.horizontalAlign = 'left';
         // Make it go out of screen.
         el.horizontalOffset = -1000;
@@ -1052,9 +1068,9 @@ describe('ArcFitMixin', () => {
         assert.isTrue(rect.width < elRect.width, 'reduced size');
       });
 
-      it('negative horizontalOffset does not crop element', function() {
+      it('negative horizontalOffset does not crop element', () => {
         // Push to the bottom of the screen.
-        parent.style.left = (window.innerWidth - 50) + 'px';
+        parent.style.left = `${window.innerWidth - 50  }px`;
         el.horizontalAlign = 'left';
         el.horizontalOffset = -10;
         el.refit();
@@ -1063,7 +1079,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.right, window.innerWidth, 'right ok');
       });
 
-      it('element max-width is updated', function() {
+      it('element max-width is updated', () => {
         parent.style.left = '-10px';
         el.horizontalAlign = 'left';
         el.refit();
@@ -1072,9 +1088,9 @@ describe('ArcFitMixin', () => {
         assert.isBelow(rect.width, elRect.width, 'width ok');
       });
 
-      it('min-width is preserved: element is displayed even if partially', function() {
+      it('min-width is preserved: element is displayed even if partially', () => {
         parent.style.left = '-10px';
-        el.style.minWidth = elRect.width + 'px';
+        el.style.minWidth = `${elRect.width  }px`;
         el.horizontalAlign = 'left';
         el.refit();
         const rect = el.getBoundingClientRect();
@@ -1083,7 +1099,7 @@ describe('ArcFitMixin', () => {
         assert.isTrue(intersects(rect, fitRect), 'partially visible');
       });
 
-      it('dynamicAlign will prefer right align if it minimizes the cropping', function() {
+      it('dynamicAlign will prefer right align if it minimizes the cropping', () => {
         parent.style.left = '-10px';
         parentRect = parent.getBoundingClientRect();
         el.horizontalAlign = 'left';
@@ -1095,8 +1111,8 @@ describe('ArcFitMixin', () => {
       });
     });
 
-    describe('when horizontalAlign is right', function() {
-      it('element is aligned to the positionTarget right', function() {
+    describe('when horizontalAlign is right', () => {
+      it('element is aligned to the positionTarget right', () => {
         el.horizontalAlign = 'right';
         el.refit();
         const rect = el.getBoundingClientRect();
@@ -1104,9 +1120,9 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.width, elRect.width, 'no cropping');
       });
 
-      it('element is aligned to the positionTarget right without overlapping it', function() {
+      it('element is aligned to the positionTarget right without overlapping it', () => {
         // Make space at the parent's left.
-        parent.style.left = elRect.width + 'px';
+        parent.style.left = `${elRect.width  }px`;
         parentRect = parent.getBoundingClientRect();
         el.horizontalAlign = 'right';
         el.noOverlap = true;
@@ -1116,7 +1132,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.width, elRect.width, 'no cropping');
       });
 
-      it('element margin is considered as offset', function() {
+      it('element margin is considered as offset', () => {
         el.horizontalAlign = 'right';
         el.style.marginRight = '10px';
         el.refit();
@@ -1130,7 +1146,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.width, elRect.width, 'no cropping');
       });
 
-      it('horizontalOffset is applied', function() {
+      it('horizontalOffset is applied', () => {
         el.horizontalAlign = 'right';
         el.horizontalOffset = 10;
         el.refit();
@@ -1139,7 +1155,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.width, elRect.width, 'no cropping');
       });
 
-      it('element is kept in viewport', function() {
+      it('element is kept in viewport', () => {
         el.horizontalAlign = 'right';
         // Make it go out of screen.
         el.horizontalOffset = 1000;
@@ -1149,8 +1165,8 @@ describe('ArcFitMixin', () => {
         assert.isTrue(rect.width < elRect.width, 'reduced width');
       });
 
-      it('element max-width is updated', function() {
-        parent.style.left = (100 - parentRect.width) + 'px';
+      it('element max-width is updated', () => {
+        parent.style.left = `${100 - parentRect.width  }px`;
         el.horizontalAlign = 'right';
         el.refit();
         const rect = el.getBoundingClientRect();
@@ -1158,10 +1174,10 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.width, 100, 'width ok');
       });
 
-      it('min-width is preserved: element is displayed even if partially', function() {
-        parent.style.left = (elRect.width - 10 - parentRect.width) + 'px';
+      it('min-width is preserved: element is displayed even if partially', () => {
+        parent.style.left = `${elRect.width - 10 - parentRect.width  }px`;
         el.horizontalAlign = 'right';
-        el.style.minWidth = elRect.width + 'px';
+        el.style.minWidth = `${elRect.width  }px`;
         el.refit();
         const rect = el.getBoundingClientRect();
         assert.equal(rect.left, 0, 'left ok');
@@ -1169,8 +1185,8 @@ describe('ArcFitMixin', () => {
         assert.isTrue(intersects(rect, fitRect), 'partially visible');
       });
 
-      it('dynamicAlign will prefer left align if it minimizes the cropping', function() {
-        parent.style.left = (window.innerWidth - elRect.width) + 'px';
+      it('dynamicAlign will prefer left align if it minimizes the cropping', () => {
+        parent.style.left = `${window.innerWidth - elRect.width  }px`;
         parentRect = parent.getBoundingClientRect();
         el.horizontalAlign = 'right';
         el.dynamicAlign = true;
@@ -1181,8 +1197,8 @@ describe('ArcFitMixin', () => {
       });
     });
 
-    describe('when horizontalAlign is center', function() {
-      it('element is aligned to the positionTarget center', function() {
+    describe('when horizontalAlign is center', () => {
+      it('element is aligned to the positionTarget center', () => {
         el.horizontalAlign = 'center';
         el.refit();
         const rect = el.getBoundingClientRect();
@@ -1193,7 +1209,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.width, elRect.width, 'no cropping');
       });
 
-      it('element is aligned to the positionTarget left without overlapping it', function() {
+      it('element is aligned to the positionTarget left without overlapping it', () => {
         el.horizontalAlign = 'center';
         el.noOverlap = true;
         el.refit();
@@ -1202,7 +1218,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.width, elRect.width, 'no cropping');
       });
 
-      it('element margin is considered as offset', function() {
+      it('element margin is considered as offset', () => {
         el.horizontalAlign = 'center';
         el.style.marginLeft = '10px';
         el.refit();
@@ -1222,7 +1238,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.width, elRect.width, 'no cropping');
       });
 
-      it('horizontalOffset is applied', function() {
+      it('horizontalOffset is applied', () => {
         el.horizontalAlign = 'center';
         el.horizontalOffset = 10;
         el.refit();
@@ -1234,7 +1250,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.width, elRect.width, 'no cropping');
       });
 
-      it('element is kept in viewport', function() {
+      it('element is kept in viewport', () => {
         el.horizontalAlign = 'center';
         // Make it go out of screen.
         el.horizontalOffset = -1000;
@@ -1244,9 +1260,9 @@ describe('ArcFitMixin', () => {
         assert.isTrue(rect.width < elRect.width, 'reduced size');
       });
 
-      it('negative horizontalOffset does not crop element', function() {
+      it('negative horizontalOffset does not crop element', () => {
         // Push to the bottom of the screen.
-        parent.style.left = (window.innerWidth - 50) + 'px';
+        parent.style.left = `${window.innerWidth - 50  }px`;
         el.horizontalAlign = 'center';
         el.horizontalOffset = -10;
         el.refit();
@@ -1255,7 +1271,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.right, window.innerWidth, 'right ok');
       });
 
-      it('element max-width is updated', function() {
+      it('element max-width is updated', () => {
         parent.style.left = '-50px';
         el.horizontalAlign = 'center';
         el.refit();
@@ -1264,9 +1280,9 @@ describe('ArcFitMixin', () => {
         assert.isBelow(rect.width, elRect.width, 'width ok');
       });
 
-      it('min-width is preserved: element is displayed even if partially', function() {
+      it('min-width is preserved: element is displayed even if partially', () => {
         parent.style.left = '-50px';
-        el.style.minWidth = elRect.width + 'px';
+        el.style.minWidth = `${elRect.width  }px`;
         el.horizontalAlign = 'center';
         el.refit();
         const rect = el.getBoundingClientRect();
@@ -1275,7 +1291,7 @@ describe('ArcFitMixin', () => {
         assert.isTrue(intersects(rect, fitRect), 'partially visible');
       });
 
-      it('dynamicAlign will prefer right align if it minimizes the cropping', function() {
+      it('dynamicAlign will prefer right align if it minimizes the cropping', () => {
         parent.style.left = '-50px';
         parentRect = parent.getBoundingClientRect();
         el.horizontalAlign = 'center';
@@ -1287,8 +1303,8 @@ describe('ArcFitMixin', () => {
       });
     });
 
-    describe('when horizontalAlign is auto', function() {
-      it('element is aligned to the positionTarget left', function() {
+    describe('when horizontalAlign is auto', () => {
+      it('element is aligned to the positionTarget left', () => {
         el.horizontalAlign = 'auto';
         el.refit();
         const rect = el.getBoundingClientRect();
@@ -1296,9 +1312,9 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.width, elRect.width, 'no cropping');
       });
 
-      it('element is aligned to the positionTarget left without overlapping positionTarget', function() {
+      it('element is aligned to the positionTarget left without overlapping positionTarget', () => {
         // Make space at the parent's left.
-        parent.style.left = elRect.width + 'px';
+        parent.style.left = `${elRect.width  }px`;
         parentRect = parent.getBoundingClientRect();
         el.horizontalAlign = 'auto';
         el.noOverlap = true;
@@ -1308,7 +1324,7 @@ describe('ArcFitMixin', () => {
         assert.isFalse(intersects(rect, parentRect), 'no overlap');
       });
 
-      it('right is preferred to left if it diminishes the cropped area', function() {
+      it('right is preferred to left if it diminishes the cropped area', () => {
         // This would cause a cropping of the element, so it should
         // automatically align to the right to avoid it.
         parent.style.left = '-10px';
@@ -1333,8 +1349,8 @@ describe('ArcFitMixin', () => {
       });
     });
 
-    describe('when horizontalAlign is center and verticalAling is middle', function() {
-      it('element is aligned to the positionTarget center', function() {
+    describe('when horizontalAlign is center and verticalAling is middle', () => {
+      it('element is aligned to the positionTarget center', () => {
         el.horizontalAlign = 'center';
         el.verticalAlign = 'middle';
         el.refit();
@@ -1351,19 +1367,19 @@ describe('ArcFitMixin', () => {
       });
     });
 
-    describe('prefer horizontal overlap to vertical overlap', function() {
-      beforeEach(function() {
+    describe('prefer horizontal overlap to vertical overlap', () => {
+      beforeEach(() => {
         el.noOverlap = true;
         el.dynamicAlign = true;
         // Make space around the positionTarget.
-        parent.style.top = elRect.height + 'px';
-        parent.style.left = elRect.width + 'px';
+        parent.style.top = `${elRect.height  }px`;
+        parent.style.left = `${elRect.width  }px`;
         parent.style.width = '10px';
         parent.style.height = '10px';
         parentRect = parent.getBoundingClientRect();
       });
 
-      it('top-left aligns to target bottom-left', function() {
+      it('top-left aligns to target bottom-left', () => {
         el.verticalAlign = 'top';
         el.horizontalAlign = 'left';
         el.refit();
@@ -1372,7 +1388,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.top, parentRect.bottom, 'top ok');
       });
 
-      it('top-right aligns to target bottom-right', function() {
+      it('top-right aligns to target bottom-right', () => {
         el.verticalAlign = 'top';
         el.horizontalAlign = 'right';
         el.refit();
@@ -1381,7 +1397,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.top, parentRect.bottom, 'top ok');
       });
 
-      it('bottom-left aligns to target top-left', function() {
+      it('bottom-left aligns to target top-left', () => {
         el.verticalAlign = 'bottom';
         el.horizontalAlign = 'left';
         el.refit();
@@ -1390,7 +1406,7 @@ describe('ArcFitMixin', () => {
         assert.equal(rect.bottom, parentRect.top, 'bottom ok');
       });
 
-      it('bottom-right aligns to target top-right', function() {
+      it('bottom-right aligns to target top-right', () => {
         el.verticalAlign = 'bottom';
         el.horizontalAlign = 'right';
         el.refit();

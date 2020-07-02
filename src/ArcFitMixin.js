@@ -96,7 +96,8 @@ const mxFunction = base => {
         autoFitOnAttach: { type: Boolean, reflect: true },
         _oldAutoFitOnAttach: { type: Boolean, attribute: 'auto-fit-on-attach' },
 
-        _fitInfo: { type: Object }
+        _fitInfo: { type: Object },
+        fitPositionTarget: { type: Boolean }
       };
     }
 
@@ -504,8 +505,12 @@ const mxFunction = base => {
 
       // Use right/bottom to set maxWidth/maxHeight, and respect
       // minWidth/minHeight.
-      this.sizingTarget.style.maxWidth =
-          `${Math.max(right - left, this._fitInfo.sizedBy.minWidth)}px`;
+      if (this.fitPositionTarget) {
+        this.sizingTarget.style.maxWidth = `${Math.max(right - left, this._fitInfo.sizedBy.minWidth, positionRect.width)}px`;
+        this.style.width = this.sizingTarget.style.maxWidth;
+      } else {
+        this.sizingTarget.style.maxWidth = `${Math.max(right - left, this._fitInfo.sizedBy.minWidth)}px`;
+      }
       this.sizingTarget.style.maxHeight =
           `${Math.max(bottom - top, this._fitInfo.sizedBy.minHeight)}px`;
 
