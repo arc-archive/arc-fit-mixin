@@ -97,7 +97,10 @@ const mxFunction = base => {
         _oldAutoFitOnAttach: { type: Boolean, attribute: 'auto-fit-on-attach' },
 
         _fitInfo: { type: Object },
-        fitPositionTarget: { type: Boolean }
+        /** 
+         * When set it fits the positioning target width.
+         */
+        fitPositionTarget: { type: Boolean },
       };
     }
 
@@ -109,6 +112,7 @@ const mxFunction = base => {
       if (this.fitInto === window) {
         fitWidth = this.fitInto.innerWidth;
       } else {
+        // @ts-ignore
         fitWidth = this.fitInto.getBoundingClientRect().width;
       }
       return fitWidth;
@@ -122,6 +126,8 @@ const mxFunction = base => {
       if (this.fitInto === window) {
         fitHeight = this.fitInto.innerHeight;
       } else {
+        // @ts-ignore
+        // @ts-ignore
         fitHeight = this.fitInto.getBoundingClientRect().height;
       }
       return fitHeight;
@@ -135,6 +141,7 @@ const mxFunction = base => {
       if (this.fitInto === window) {
         fitLeft = 0;
       } else {
+        // @ts-ignore
         fitLeft = this.fitInto.getBoundingClientRect().left;
       }
       return fitLeft;
@@ -148,6 +155,7 @@ const mxFunction = base => {
       if (this.fitInto === window) {
         fitTop = 0;
       } else {
+        // @ts-ignore
         fitTop = this.fitInto.getBoundingClientRect().top;
       }
       return fitTop;
@@ -311,7 +319,7 @@ const mxFunction = base => {
         // @ts-ignore
         super.connectedCallback();
       }
-      // Memoize this to avoid expensive calculations & relayouts.
+      // Memorize this to avoid expensive calculations & relayouts.
       // Make sure we do it only once
       if (typeof this._isRTL === 'undefined') {
         this._isRTL = window.getComputedStyle(this).direction === 'rtl';
@@ -339,12 +347,12 @@ const mxFunction = base => {
      */
     constructor() {
       super();
-
       this.sizingTarget = this;
       this.fitInto = window;
       this.horizontalOffset = 0;
       this.verticalOffset = 0;
       this.autoFitOnAttach = false;
+      this.fitPositionTarget = false;
     }
 
     /**

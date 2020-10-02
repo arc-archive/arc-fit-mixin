@@ -1,1 +1,1 @@
-export {ArcFitMixin} from './src/ArcFitMixin';
+export {ArcFitMixin, ArcFitMixinConstructor} from './src/ArcFitMixin';
