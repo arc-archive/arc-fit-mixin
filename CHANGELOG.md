@@ -131,3 +131,23 @@
 * barch upgrade to 2020, logic the same [e9f44d6](https://github.com/advanced-rest-client/arc-fit-mixin/commit/e9f44d6a65dbb778a077aac240f90d775451a77a) by Pawel
 
 
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/advanced-rest-client/arc-fit-mixin/compare/1.1.0...1.2.1) (2020-10-02)
+
+### Build
+
+* bump version [edfc5d0](https://github.com/advanced-rest-client/arc-fit-mixin/commit/edfc5d0cf001e0240b7549267c58741d22b751db) by Carolina Wright
+
+
+### Update
+
+* updating typpings [9f362c1](https://github.com/advanced-rest-client/arc-fit-mixin/commit/9f362c12f280c5e1cf48eaebbd35507a4f378503) by Pawel
+* [ci skip] automated merge master->stage. syncing main branches [4a0135c](https://github.com/advanced-rest-client/arc-fit-mixin/commit/4a0135ca9569fe3368009bbe1362c1f426a20353) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [ebb9bc4](https://github.com/advanced-rest-client/arc-fit-mixin/commit/ebb9bc4880489f2833c2b0557878e836267be335) by Ci agent
+
+
+### Features
+
+* APIC-400 fit width to position target [6269568](https://github.com/advanced-rest-client/arc-fit-mixin/commit/626956896384afa8864a1882a9209519f45c2375) by Carolina Wright
+
+
