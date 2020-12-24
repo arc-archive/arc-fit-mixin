@@ -1,5 +1,4 @@
 coverage/
 test/
 demo/
-.travis.yml
-karma.*
+tsconfig.json

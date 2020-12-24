@@ -1,9 +1,5 @@
 [![Published on NPM](https://img.shields.io/npm/v/@advanced-rest-client/arc-fit-mixin.svg)](https://www.npmjs.com/package/@advanced-rest-client/arc-fit-mixin)
 
-[![Build Status](https://travis-ci.com/advanced-rest-client/arc-fit-mixin.svg)](https://travis-ci.com/advanced-rest-client/arc-fit-mixin)
-
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/advanced-rest-client/arc-fit-mixin)
-
 This mixin is a port of [iron-fit-behavior](https://github.com/PolymerElements/iron-fit-behavior) that works with LitElement.
 
 `ArcFitMixin` fits an element in another element using `max-height` and `max-width`, and optionally centers it in the window or another element. The element will only be sized and/or positioned if it has not already been sized and/or positioned by CSS.
