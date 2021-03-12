@@ -1,8 +1,8 @@
+# ArcFitMixin
+
 [![Published on NPM](https://img.shields.io/npm/v/@advanced-rest-client/arc-fit-mixin.svg)](https://www.npmjs.com/package/@advanced-rest-client/arc-fit-mixin)
 
-[![Build Status](https://travis-ci.com/advanced-rest-client/arc-fit-mixin.svg)](https://travis-ci.com/advanced-rest-client/arc-fit-mixin)
-
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/advanced-rest-client/arc-fit-mixin)
+[![Tests and publishing](https://github.com/advanced-rest-client/arc-fit-mixin/actions/workflows/deployment.yml/badge.svg)](https://github.com/advanced-rest-client/arc-fit-mixin/actions/workflows/deployment.yml)
 
 This mixin is a port of [iron-fit-behavior](https://github.com/PolymerElements/iron-fit-behavior) that works with LitElement.
 
