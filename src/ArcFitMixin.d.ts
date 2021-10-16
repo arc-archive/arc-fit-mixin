@@ -32,6 +32,9 @@ declare interface FitInfo {
   }
 }
 
+/**
+ * @deprecated Use the `@anypoint-web-components/awc` module instead.
+ */
 interface ArcFitMixin {
   /**
    * The element that will receive a `max-height`/`width`. By default it is
